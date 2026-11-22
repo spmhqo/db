@@ -1,0 +1,76 @@
+
+Please review the uploaded html page and create a new similar html page with the following 12 prompts, 5 sections and no multiline dynamic input fields. 
+
+Ensure that:
+1, Each prompt must have its own box. 
+2, Please add "Open Link" button to each prompt, link must open in a new window.
+
+RULE (MANDATORY)
+
+1, Give me all the codes, css, and scripts in a single code box.
+2, add: <link rel="icon" href="spm.ico">
+3, Footer = Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+4, Please don't edit, add, and delete anything of the prompt, keep them as they are in the relevant prompt boxes.
+5, Create 1 navigation for Sections and the other for prompts. Please use their names, not numbers as navigation button texts.
+
+Page Header: Dashboard
+Page Sub-Header: (back office)
+
+no multiline dynamic input fields:
+
+Section1 Name -> R&D
+
+Prompt#1:
+
+https://x.ailab.shop/
+
+Section2 Name -> Daily Use
+
+Prompt#2:
+https://spmhqo.github.io/sop/
+
+Prompt#3:
+https://spmhqo.github.io/goib/
+
+Prompt#4:
+https://spmhqo.github.io/tib/
+
+Section3 Name -> E-com
+
+Prompt#:5
+
+https://e.ailab.shop/
+
+Prompt#6:
+
+https://e.ailab.shop/ecom-product-visual-analysis.html
+
+Prompt#7:
+
+https://e.ailab.shop/ecom-photography.html
+
+Section4 Name -> Product Visual
+
+Prompt#8:
+
+https://pv.spmukherjee.co.in/
+
+Prompt#9:
+
+https://pv.spmukherjee.co.in/pde.html
+
+Prompt#10:
+
+Section5 Name -> Visual Learning
+
+Prompt#11:
+
+https://vl.spmukherjee.co.in/
+
+Prompt#12:
+
+https://vl.spmukherjee.co.in/brand-it.html
+
+
+
+
