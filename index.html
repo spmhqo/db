@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - (back office)</title>
+  <link rel="icon" href="spm.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Couleurs aléatoires 185 Color Palette */
+      --brand-deep-pine: #26483c;     /* rgb(38, 72, 60) */
+      --brand-magenta: #fa72dc;       /* rgb(250, 114, 220) */
+      --brand-azure: #3582be;         /* rgb(53, 130, 190) */
+      --brand-chartreuse: #d2da7e;    /* rgb(210, 218, 126) */
+      --brand-sage: #5d8d7f;          /* rgb(93, 141, 127) */
+
+      /* Derived Corporate Glossy Surfaces */
+      --bg-dark: #13251f;
+      --surface-glass: linear-gradient(145deg, rgba(38, 72, 60, 0.78), rgba(20, 40, 33, 0.90));
+      --surface-highlight: rgba(255, 255, 255, 0.14);
+      --border-gloss: rgba(93, 141, 127, 0.42);
+      --text-primary: #f7faf8;
+      --text-secondary: #c5d6d0;
+      --code-bg: rgba(11, 22, 18, 0.65);
+      --shadow-elevated: 0 20px 45px -15px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 12% 10%, rgba(53, 130, 190, 0.24) 0%, transparent 42%),
+        radial-gradient(circle at 88% 18%, rgba(250, 114, 220, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(93, 141, 127, 0.22) 0%, transparent 50%),
+        linear-gradient(155deg, #162b24 0%, #26483c 48%, #101f1a 100%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 48px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Executive Glossy Header */
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+      padding: 34px 28px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(38, 72, 60, 0.85), rgba(53, 130, 190, 0.25));
+      border: 1px solid var(--border-gloss);
+      box-shadow: var(--shadow-elevated);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brand-azure), var(--brand-chartreuse), var(--brand-magenta));
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: -60%;
+      left: -10%;
+      width: 120%;
+      height: 85%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(-3deg);
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .sub-header {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brand-chartreuse);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Navigation Bars */
+    .nav-wrapper {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-gloss);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 44px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nav-group + .nav-group {
+      padding-top: 16px;
+      border-top: 1px solid rgba(93, 141, 127, 0.28);
+    }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand-chartreuse);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-group-title::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand-magenta);
+      box-shadow: 0 0 8px var(--brand-magenta);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 15px;
+      border-radius: 10px;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-block;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-btn-section {
+      background: linear-gradient(180deg, rgba(53, 130, 190, 0.34) 0%, rgba(53, 130, 190, 0.16) 100%);
+      color: #ffffff;
+      border: 1px solid rgba(53, 130, 190, 0.55);
+    }
+
+    .nav-btn-section:hover {
+      background: linear-gradient(135deg, var(--brand-azure), #27689b);
+      border-color: #7cc0f5;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px -4px rgba(53, 130, 190, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-btn-prompt {
+      background: linear-gradient(180deg, rgba(93, 141, 127, 0.24) 0%, rgba(38, 72, 60, 0.45) 100%);
+      color: var(--text-primary);
+      border: 1px solid rgba(93, 141, 127, 0.4);
+    }
+
+    .nav-btn-prompt:hover {
+      background: linear-gradient(135deg, rgba(210, 218, 126, 0.22), rgba(93, 141, 127, 0.42));
+      border-color: var(--brand-chartreuse);
+      color: var(--brand-chartreuse);
+      transform: translateY(-2px);
+    }
+
+    /* Sections & Cards */
+    .sections-container {
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+    }
+
+    .dashboard-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-heading {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, rgba(53, 130, 190, 0.25), rgba(38, 72, 60, 0.35), transparent);
+      border-left: 4px solid var(--brand-chartreuse);
+      border-bottom: 1px solid rgba(93, 141, 127, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.01em;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .section-heading::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand-magenta);
+      box-shadow: 0 0 12px var(--brand-magenta);
+    }
+
+    .step-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-gloss);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: var(--shadow-elevated);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      scroll-margin-top: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .step-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      pointer-events: none;
+    }
+
+    .step-card:hover {
+      border-color: rgba(210, 218, 126, 0.55);
+      box-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .step-label {
+      font-weight: 800;
+      font-size: 0.82rem;
+      background: linear-gradient(135deg, var(--brand-chartreuse), #b8c264);
+      color: #162b24;
+      padding: 6px 16px;
+      border-radius: 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(210, 218, 126, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .step-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #f8e8f5;
+      background: linear-gradient(135deg, rgba(250, 114, 220, 0.22), rgba(53, 130, 190, 0.22));
+      padding: 5px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(250, 114, 220, 0.42);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .prompt-content {
+      background: var(--code-bg);
+      padding: 22px;
+      border-radius: 14px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.95rem;
+      color: #e6f0ec;
+      white-space: pre-wrap;
+      border: 1px solid rgba(93, 141, 127, 0.32);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
+      margin-bottom: 22px;
+      line-height: 1.6;
+      word-break: break-word;
+      min-height: 68px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      flex: 1 1 200px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glossy Sheen Overlay on Buttons */
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+    }
+
+    .copy-btn {
+      background: linear-gradient(180deg, rgba(93, 141, 127, 0.35) 0%, rgba(38, 72, 60, 0.75) 100%);
+      color: var(--brand-chartreuse);
+      border: 1px solid var(--brand-sage);
+      box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .copy-btn:hover {
+      background: linear-gradient(180deg, var(--brand-sage) 0%, var(--brand-deep-pine) 100%);
+      border-color: var(--brand-chartreuse);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .copy-btn.copied {
+      background: linear-gradient(135deg, var(--brand-magenta), #c948ad);
+      border-color: #ffb8ef;
+      color: #ffffff;
+      box-shadow: 0 8px 20px -4px rgba(250, 114, 220, 0.55);
+    }
+
+    .open-btn {
+      background: linear-gradient(180deg, #4696d4 0%, var(--brand-azure) 55%, #266494 100%);
+      color: #ffffff;
+      border: 1px solid #6eb5ec;
+      box-shadow: 0 8px 20px -6px rgba(53, 130, 190, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .open-btn:hover {
+      background: linear-gradient(180deg, #58a6e2 0%, #3b8dcd 55%, #2b70a6 100%);
+      border-color: #a3d4fa;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px rgba(53, 130, 190, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .open-btn.disabled {
+      background: rgba(38, 72, 60, 0.35);
+      color: rgba(197, 214, 208, 0.45);
+      border: 1px solid rgba(93, 141, 127, 0.25);
+      box-shadow: none;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .open-btn.disabled::after {
+      display: none;
+    }
+
+    .footer {
+      margin-top: 80px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.86rem;
+      border-top: 1px solid rgba(93, 141, 127, 0.35);
+      padding-top: 36px;
+      width: 100%;
+      padding-bottom: 36px;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .sub-header { font-size: 0.92rem; }
+      header { padding: 24px 18px; }
+      .step-card { padding: 22px; }
+      .prompt-content { font-size: 0.85rem; }
+      .btn { flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Dashboard</h1>
+      <p class="sub-header">(back office)</p>
+    </header>
+
+    <!-- Dual Navigation Bars -->
+    <nav class="nav-wrapper" aria-label="Dashboard Navigation">
+      <div class="nav-group">
+        <span class="nav-group-title">Sections</span>
+        <div class="nav-links" id="sectionNav"></div>
+      </div>
+      <div class="nav-group">
+        <span class="nav-group-title">Prompts</span>
+        <div class="nav-links" id="promptNav"></div>
+      </div>
+    </nav>
+
+    <!-- Sections & Prompt Cards -->
+    <main class="sections-container" id="sectionsContainer"></main>
+
+    <footer class="footer">
+      <p>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const dashboardData = [
+      {
+        sectionId: "sec-rd",
+        sectionName: "R&D",
+        prompts: [
+          {
+            id: 1,
+            navName: "x.ailab.shop",
+            text: `https://x.ailab.shop/`
+          }
+        ]
+      },
+      {
+        sectionId: "sec-daily-use",
+        sectionName: "Daily Use",
+        prompts: [
+          {
+            id: 2,
+            navName: "sop",
+            text: `https://spmhqo.github.io/sop/`
+          },
+          {
+            id: 3,
+            navName: "goib",
+            text: `https://spmhqo.github.io/goib/`
+          },
+          {
+            id: 4,
+            navName: "tib",
+            text: `https://spmhqo.github.io/tib/`
+          }
+        ]
+      },
+      {
+        sectionId: "sec-ecom",
+        sectionName: "E-com",
+        prompts: [
+          {
+            id: 5,
+            navName: "e.ailab.shop",
+            text: `https://e.ailab.shop/`
+          },
+          {
+            id: 6,
+            navName: "ecom-product-visual-analysis",
+            text: `https://e.ailab.shop/ecom-product-visual-analysis.html`
+          },
+          {
+            id: 7,
+            navName: "ecom-photography",
+            text: `https://e.ailab.shop/ecom-photography.html`
+          }
+        ]
+      },
+      {
+        sectionId: "sec-product-visual",
+        sectionName: "Product Visual",
+        prompts: [
+          {
+            id: 8,
+            navName: "pv.spmukherjee.co.in",
+            text: `https://pv.spmukherjee.co.in/`
+          },
+          {
+            id: 9,
+            navName: "pde",
+            text: `https://pv.spmukherjee.co.in/pde.html`
+          },
+          {
+            id: 10,
+            navName: "Prompt #10",
+            text: ``
+          }
+        ]
+      },
+      {
+        sectionId: "sec-visual-learning",
+        sectionName: "Visual Learning",
+        prompts: [
+          {
+            id: 11,
+            navName: "vl.spmukherjee.co.in",
+            text: `https://vl.spmukherjee.co.in/`
+          },
+          {
+            id: 12,
+            navName: "brand-it",
+            text: `https://vl.spmukherjee.co.in/brand-it.html`
+          }
+        ]
+      }
+    ];
+
+    function extractUrl(text) {
+      const match = text.trim().match(/https?:\/\/[^\s]+/);
+      return match ? match[0] : "";
+    }
+
+    function renderDashboard() {
+      const sectionNav = document.getElementById('sectionNav');
+      const promptNav = document.getElementById('promptNav');
+      const sectionsContainer = document.getElementById('sectionsContainer');
+
+      dashboardData.forEach(section => {
+        // Section Navigation Button
+        const secLink = document.createElement('a');
+        secLink.href = `#${section.sectionId}`;
+        secLink.className = 'nav-btn nav-btn-section';
+        secLink.textContent = section.sectionName;
+        sectionNav.appendChild(secLink);
+
+        // Section Wrapper
+        const sectionEl = document.createElement('section');
+        sectionEl.className = 'dashboard-section';
+        sectionEl.id = section.sectionId;
+
+        const heading = document.createElement('h2');
+        heading.className = 'section-heading';
+        heading.textContent = section.sectionName;
+        sectionEl.appendChild(heading);
+
+        section.prompts.forEach(prompt => {
+          const promptAnchorId = `prompt-card-${prompt.id}`;
+
+          // Prompt Navigation Button
+          const promptLink = document.createElement('a');
+          promptLink.href = `#${promptAnchorId}`;
+          promptLink.className = 'nav-btn nav-btn-prompt';
+          promptLink.textContent = prompt.navName;
+          promptNav.appendChild(promptLink);
+
+          // Prompt Card
+          const card = document.createElement('div');
+          card.className = 'step-card';
+          card.id = promptAnchorId;
+
+          const url = extractUrl(prompt.text);
+          const openLinkHtml = url
+            ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="btn open-btn"><span>Open Link ↗</span></a>`
+            : `<button type="button" class="btn open-btn disabled" disabled><span>Open Link</span></button>`;
+
+          card.innerHTML = `
+            <div class="step-header">
+              <span class="step-label">Prompt #${prompt.id}</span>
+              <span class="step-badge">${section.sectionName}</span>
+            </div>
+            <div class="prompt-content" id="p${prompt.id}"></div>
+            <div class="action-row">
+              <button type="button" class="btn copy-btn" onclick="copyText('p${prompt.id}', this)">
+                <span>Copy Prompt #${prompt.id}</span>
+              </button>
+              ${openLinkHtml}
+            </div>
+          `;
+
+          sectionEl.appendChild(card);
+          card.querySelector(`#p${prompt.id}`).textContent = prompt.text;
+        });
+
+        sectionsContainer.appendChild(sectionEl);
+      });
+    }
+
+    function copyText(id, btn) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', renderDashboard);
+  </script>
+</body>
+</html>
